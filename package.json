@@ -1,0 +1,15 @@
+{
+  "name": "git-webhook",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "gitlab-webhook-handler": "^1.0.1",
+    "log4js": "^1.1.1"
+  }
+}
