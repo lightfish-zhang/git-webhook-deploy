@@ -58,14 +58,14 @@ git checkout $PROJECT_BRANCH
 
 echo "build..."
 npm install
-if [ $? ];then
+if [ $? -eq 0 ];then
     $(dingdingRobotMsg "${PROJECT_NAME} ${PROJECT_BRANCH} npm install success")
 else
     $(dingdingRobotMsg "${PROJECT_NAME} ${PROJECT_BRANCH} npm install fail")
     exit
 fi
 npm run build
-if [ $? ];then
+if [ $? -eq 0 ];then
     $(dingdingRobotMsg "${PROJECT_NAME} ${PROJECT_BRANCH} npm build success")
 else
     $(dingdingRobotMsg "${PROJECT_NAME} ${PROJECT_BRANCH} npm build fail")
