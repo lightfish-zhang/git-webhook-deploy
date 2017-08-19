@@ -10,16 +10,8 @@ PROJECT_WEB=${WEB_PATH}"/"${PROJECT_NAME}
 PROJECT_REPO=${2}
 PROJECT_BRANCH=${3}
 
-dingdingRobotMsg(){
-    curl 'https://oapi.dingtalk.com/robot/send?access_token=xxxx' \
-    -H 'Content-Type: application/json' \
-    -d "
-    {\"msgtype\": \"text\",
-    \"text\": {
-        \"content\" : \"${1}\"
-     }
-    }"
-}
+_dirName=`dirname $0` && _dirName=`cd $_dirName && pwd`
+source "${_dirName}/util.sh"
 
 if [ ! -n "$PROJECT_NAME" ];then
     echo "please input project dir"
@@ -39,7 +31,7 @@ if [ ! -x "$SRC_PATH" ];then
 fi
 
 if [ -x "$PROJECT_SRC" ];then
-    $(dingdingRobotMsg "${PROJECT_NAME} ${PROJECT_BRANCH} Start git pull ${PROJECT_REPO} ${PROJECT_NAME}")
+    $(robotMsg "${PROJECT_NAME} ${PROJECT_BRANCH} Start git pull ${PROJECT_REPO} ${PROJECT_NAME}")
 	echo "Start git pull path:"$PROJECT_SRC
     cd $PROJECT_SRC
     echo "pulling source code..."
@@ -47,7 +39,7 @@ if [ -x "$PROJECT_SRC" ];then
     git clean -f
     git pull
 else
-    $(dingdingRobotMsg "${PROJECT_NAME} ${PROJECT_BRANCH} Start git clone ${PROJECT_REPO} ${PROJECT_NAME}")
+    $(robotMsg "${PROJECT_NAME} ${PROJECT_BRANCH} Start git clone ${PROJECT_REPO} ${PROJECT_NAME}")
 	echo "Start git clone path:"$PROJECT_SRC
 	cd $SRC_PATH
 	git clone $PROJECT_REPO $PROJECT_NAME
@@ -59,16 +51,16 @@ git checkout $PROJECT_BRANCH
 echo "build..."
 npm install
 if [ $? -eq 0 ];then
-    $(dingdingRobotMsg "${PROJECT_NAME} ${PROJECT_BRANCH} npm install success")
+    $(robotMsg "${PROJECT_NAME} ${PROJECT_BRANCH} npm install success")
 else
-    $(dingdingRobotMsg "${PROJECT_NAME} ${PROJECT_BRANCH} npm install fail")
+    $(robotMsg "${PROJECT_NAME} ${PROJECT_BRANCH} npm install fail")
     exit
 fi
 npm run build
 if [ $? -eq 0 ];then
-    $(dingdingRobotMsg "${PROJECT_NAME} ${PROJECT_BRANCH} npm build success")
+    $(robotMsg "${PROJECT_NAME} ${PROJECT_BRANCH} npm build success")
 else
-    $(dingdingRobotMsg "${PROJECT_NAME} ${PROJECT_BRANCH} npm build fail")
+    $(robotMsg "${PROJECT_NAME} ${PROJECT_BRANCH} npm build fail")
     exit
 fi
 echo "release to web path"

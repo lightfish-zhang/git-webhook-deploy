@@ -6,8 +6,8 @@ exports.projects = [
   {
     name : 'repoName',
     callback : {
-      develop: callback.example('projectName', 'ssh://git@xxx.com/xxx/repoName.git', 'develop'),
-      master: callback.example('projectName', 'ssh://git@xxx.com/xxx/repoName.git', 'master'),
+      develop: callback.shell('shellName', 'projectName', 'ssh://xxx.com/xxx/repoName.git', 'develop'),
+      master: callback.shell('shellName', 'projectName', 'ssh://xxx.com/xxx/repoName.git', 'develop'),
     }
   },
 ];
